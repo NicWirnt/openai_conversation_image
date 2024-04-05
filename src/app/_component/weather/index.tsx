@@ -1,9 +1,23 @@
 import {
+  getAirPollution,
   getCurrentWeather,
-  getHourlyWeather,
+  getDailyForecast,
+  getUvIndex,
 } from "@/app/server/actions/weather/weatherAction";
 import React, { useEffect, useState } from "react";
 import CurrentWeather from "./widgets/CurrentWeather";
+import {
+  AirQualityData,
+  HourlyForecastData,
+  HourlyForecastResponse,
+  OpenWeatherData,
+  UVIndexResponse,
+} from "@/app/types";
+import FeelsLike from "./widgets/FeelsLike";
+import UvIndex from "./widgets/UvIndex";
+import Humidity from "./widgets/Humidity";
+import AirPollution from "./widgets/AirPollution";
+import DailyForecast from "./widgets/DailyForecast";
 type Coordinates = {
   lon: string;
   lat: string;
@@ -14,14 +28,23 @@ export type Location = {
 };
 
 const Weather = () => {
-  const [currentWeather, setCurrentWeather] = useState({});
+  const [currentWeather, setCurrentWeather] = useState<OpenWeatherData>();
+  const [airQuality, setAirQuality] = useState<AirQualityData>();
+  const [uvIndex, setUvIndex] = useState<UVIndexResponse>();
+  const [dailyForecast, setDailyForecast] = useState();
 
   const fetchCurrentWeather = async () => {
     try {
-      const res = await getCurrentWeather(coordinate);
-      if (res) {
-        setCurrentWeather(res);
-      }
+      const currentWeatherReq = await getCurrentWeather(coordinate);
+      const airPollutionReq = await getAirPollution(coordinate);
+      const uvIndexReq = await getUvIndex(coordinate);
+      const dailyForecastReq = await getDailyForecast(coordinate);
+
+      setDailyForecast(dailyForecastReq);
+      setCurrentWeather(currentWeatherReq);
+
+      setUvIndex(uvIndexReq);
+      setAirQuality(airPollutionReq);
     } catch (error) {
       console.log("Error Fetching Data", error);
     }
@@ -46,14 +69,16 @@ const Weather = () => {
       <div className="weather-block w-full flex flex-col">
         {/* <CurrentWeather data={data} city={data.name} /> */}
         <div className="grid grid-cols-3">
-          <CurrentWeather data={currentWeather} />
-          <div className="col-span-2">5-10 days forecase</div>
+          <CurrentWeather data={currentWeather!} />
+          <div className="col-span-2">
+            <DailyForecast data={dailyForecast} />
+          </div>
         </div>
-        <div className="grid grid-cols-4">
-          <div>Feels like</div>
-          <div>UV Index</div>
-          <div>Humidity</div>
-          <div>Air Poulution</div>
+        <div className="grid grid-cols-4 min-h-[15vh]">
+          <FeelsLike data={currentWeather!} />
+          <UvIndex data={uvIndex!} />
+          <Humidity data={currentWeather!} />
+          <AirPollution data={airQuality!} />
         </div>
       </div>
     </div>
