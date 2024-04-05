@@ -64,7 +64,7 @@ export default function Home() {
     // </main>
     // This is sidebar OPENAI
     <main className="flex min-h-screen flex-col items-center justify-between p-20">
-      {/* <div className="relative z-50 flex">
+      <div className="relative z-50 flex">
         <div className="flex flex-col gap-2 p-2 items-center ">
           <button className="border" onClick={() => setSidebar("chat")}>
             Chat
@@ -86,13 +86,9 @@ export default function Home() {
           >
             <AIContainer />
           </div>
-        </div> */}
-      {/* <div className="w-full">{sidebar === "weather" ? <Weather /> : ""}</div>
-      </div> */}
-      <button className="border" onClick={() => setSidebar("weather")}>
-        Weather
-      </button>
-      <div className="w-full">{sidebar === "weather" ? <Weather /> : ""}</div>
+        </div>
+        <div className="w-full">{sidebar === "weather" ? <Weather /> : ""}</div>
+      </div>
     </main>
   );
 }
