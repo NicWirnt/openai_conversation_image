@@ -67,18 +67,18 @@ const Weather = () => {
   return (
     <div className="weather-section w-[90vh]">
       <div className="weather-block w-full flex flex-col">
-        {/* <CurrentWeather data={data} city={data.name} /> */}
         <div className="grid grid-cols-3">
-          <CurrentWeather data={currentWeather!} />
+          {currentWeather && <CurrentWeather data={currentWeather} />}
+
           <div className="col-span-2">
-            <DailyForecast data={dailyForecast} />
+            {dailyForecast && <DailyForecast data={dailyForecast} />}
           </div>
         </div>
         <div className="grid grid-cols-4 min-h-[15vh]">
-          <FeelsLike data={currentWeather!} />
-          <UvIndex data={uvIndex!} />
-          <Humidity data={currentWeather!} />
-          <AirPollution data={airQuality!} />
+          {currentWeather && <FeelsLike data={currentWeather} />}
+          {uvIndex && <UvIndex data={uvIndex} />}
+          {currentWeather && <Humidity data={currentWeather} />}
+          {airQuality && <AirPollution data={airQuality} />}
         </div>
       </div>
     </div>

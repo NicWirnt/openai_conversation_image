@@ -37,7 +37,7 @@ const DailyForecast = ({ data }: DailyForecastProps) => {
         }
       }
     );
-    console.log(dailyData);
+
     return {
       day: unixToDay(dailyData[0].dt),
       minTemp: kelvinToCelsius(minTemp),
