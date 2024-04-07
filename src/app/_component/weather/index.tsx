@@ -42,7 +42,6 @@ const Weather = () => {
 
       setDailyForecast(dailyForecastReq);
       setCurrentWeather(currentWeatherReq);
-
       setUvIndex(uvIndexReq);
       setAirQuality(airPollutionReq);
     } catch (error) {
