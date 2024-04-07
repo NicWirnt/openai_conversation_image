@@ -3,7 +3,7 @@
 import next from "next";
 import { NextRequest } from "next/server";
 
-interface CoordinateProps extends NextRequest {
+interface CoordinateProps {
   lat: string;
   lon: string;
 }
